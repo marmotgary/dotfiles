@@ -23,6 +23,7 @@ set nowrap
 set hidden
 set scrolloff=8
 set signcolumn=yes
+set cursorline
 "set smartcase
 "set ignorecase
 
@@ -35,14 +36,15 @@ Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-fugitive'
 Plug 'leafgarland/typescript-vim'
 Plug 'vim-utils/vim-man'
-Plug 'git@github.com:kien/ctrlp.vim.git'
-Plug 'git@github.com:ycm-core/YouCompleteMe.git'
+"Plug 'git@github.com:kien/ctrlp.vim.git'
+"Plug 'git@github.com:ycm-core/YouCompleteMe.git'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'mbbill/undotree'
 Plug 'preservim/nerdtree'
 Plug 'preservim/nerdcommenter'
 Plug 'posva/vim-vue'
+Plug 'evanleck/vim-svelte', {'branch': 'main'}
 " Initialize plugin system
 call plug#end()
 
