@@ -13,6 +13,7 @@ set expandtab
 set autoindent
 set smartindent
 set incsearch
+set hlsearch
 set colorcolumn=80
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 set noswapfile
@@ -24,8 +25,9 @@ set hidden
 set scrolloff=8
 set signcolumn=yes
 set cursorline
-"set smartcase
-"set ignorecase
+set smartcase
+set ignorecase
+set updatetime=50
 
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
@@ -45,6 +47,8 @@ Plug 'preservim/nerdtree'
 Plug 'preservim/nerdcommenter'
 Plug 'posva/vim-vue'
 Plug 'evanleck/vim-svelte', {'branch': 'main'}
+Plug 'mattn/emmet-vim'
+Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
 " Initialize plugin system
 call plug#end()
 
@@ -60,6 +64,7 @@ set background=dark
   "\ 'file': '\v\.(exe|so|dll)$',
   "\ 'link': 'some_bad_symbolic_links',
   "\ }
+let g:user_emmet_leader_key='<C-Z>'
 let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
 let g:ackprg = 'ag --nogroup --nocolor --column'
 let $FZF_DEFAULT_OPTS='--reverse'
