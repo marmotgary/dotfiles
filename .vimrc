@@ -49,6 +49,12 @@ Plug 'posva/vim-vue'
 Plug 'evanleck/vim-svelte', {'branch': 'main'}
 Plug 'mattn/emmet-vim'
 Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
+Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+Plug 'vim-airline/vim-airline'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'maxmellon/vim-jsx-pretty'
+"Plug 'SirVer/ultisnips'
+"Plug 'mlaursen/vim-react-snippets'
 " Initialize plugin system
 call plug#end()
 
@@ -68,6 +74,8 @@ let g:user_emmet_leader_key='<C-Z>'
 let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
 let g:ackprg = 'ag --nogroup --nocolor --column'
 let $FZF_DEFAULT_OPTS='--reverse'
+let g:prettier#autoformat = 1
+"let g:prettier#autoformat_require_pragma = 1
 nnoremap <leader>h :wincmd h<CR>
 nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
@@ -83,11 +91,57 @@ nnoremap <Leader>- :vertical resize -5<CR>
 "nnoremap <silent> <Leader>gr :YcmCompleter GoToReferences<CR>
 nmap <leader>gd <Plug>(coc-definition)
 nmap <leader>gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
 nnoremap <C-p> :GFiles<CR>
 
 "NERDTree
 nnoremap <C-n> :NERDTreeToggle<CR>
+nmap <leader>nf :NERDTreeFind<CR>
 
 nmap <leader>gf :diffget //2<CR>
 nmap <leader>gj :diffget //3<CR>
 nmap <leader>gs :G<CR>
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+
+"let g:UltiSnipsExpandTrigger="c-s"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
