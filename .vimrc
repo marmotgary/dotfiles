@@ -52,7 +52,8 @@ Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 Plug 'vim-airline/vim-airline'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'maxmellon/vim-jsx-pretty'
+Plug 'yuezk/vim-js'
+"Plug 'maxmellon/vim-jsx-pretty'
 "Plug 'SirVer/ultisnips'
 "Plug 'mlaursen/vim-react-snippets'
 " Initialize plugin system
@@ -82,6 +83,14 @@ nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>l :wincmd l<CR>
 nnoremap <leader>u :UndotreeShow<CR>
 
+inoremap (; (<CR>);<C-c>O
+inoremap (, (<CR>),<C-c>O
+inoremap {; {<CR>};<C-c>O
+inoremap {, {<CR>},<C-c>O
+inoremap [; [<CR>];<C-c>O
+inoremap [, [<CR>],<C-c>O
+"inoremap ' ''<left>
+"inoremap " ""<left>
 
 nnoremap <Leader>+ :vertical resize +5<CR>
 nnoremap <Leader>- :vertical resize -5<CR>
