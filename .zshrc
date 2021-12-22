@@ -100,3 +100,18 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 #eval "$(starship init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+#amplify_env () {
+    #PROJECT_DIR=$(git rev-parse --show-toplevel 2>/dev/null) 
+
+    #ENV=$PROJECT_DIR/amplify/.config/local-env-info.json 
+
+    #if [ -f "$ENV" ]; then
+        #env_info=$(cat $ENV | jq -r ".envName") 
+        #echo "(🚀 $env_info)"
+    #fi
+#}

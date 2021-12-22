@@ -7,8 +7,8 @@ set path+=**
 set wildmenu
 set wildignore+=**/node_modules/**
 
-set tabstop=4 softtabstop=4
-set shiftwidth=4
+set tabstop=2 softtabstop=2
+set shiftwidth=2
 set expandtab
 set autoindent
 set smartindent
@@ -37,11 +37,13 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-fugitive'
 Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 Plug 'vim-utils/vim-man'
 "Plug 'git@github.com:kien/ctrlp.vim.git'
 "Plug 'git@github.com:ycm-core/YouCompleteMe.git'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'stsewd/fzf-checkout.vim'
 Plug 'mbbill/undotree'
 Plug 'preservim/nerdtree'
 Plug 'preservim/nerdcommenter'
@@ -49,11 +51,15 @@ Plug 'posva/vim-vue'
 Plug 'evanleck/vim-svelte', {'branch': 'main'}
 Plug 'mattn/emmet-vim'
 Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
-Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'npm install --frozen-lockfile --production',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
 Plug 'vim-airline/vim-airline'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'yuezk/vim-js'
-"Plug 'maxmellon/vim-jsx-pretty'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'jparise/vim-graphql'
+Plug 'editorconfig/editorconfig-vim'
 "Plug 'SirVer/ultisnips'
 "Plug 'mlaursen/vim-react-snippets'
 " Initialize plugin system
@@ -62,15 +68,9 @@ call plug#end()
 colorscheme gruvbox
 set background=dark
 
-"if executable('rg')
-    "let g:rg_derive_root='true'
-"endif
-"let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-"let g:ctrlp_custom_ignore = {
-  "\ 'dir':  '\v[\/]\.(git|hg|svn|venv|node_modules)$',
-  "\ 'file': '\v\.(exe|so|dll)$',
-  "\ 'link': 'some_bad_symbolic_links',
-  "\ }
+" Editorconfig
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+
 let g:user_emmet_leader_key='<C-Z>'
 let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
 let g:ackprg = 'ag --nogroup --nocolor --column'
@@ -82,16 +82,24 @@ nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>l :wincmd l<CR>
 nnoremap <leader>u :UndotreeShow<CR>
+nnoremap <C-l> :tabnext<CR>
+nnoremap <C-h> :-tabnext<CR>
 
-inoremap (; (<CR>);<C-c>O
-inoremap (, (<CR>),<C-c>O
-inoremap {; {<CR>};<C-c>O
-inoremap {, {<CR>},<C-c>O
-inoremap [; [<CR>];<C-c>O
-inoremap [, [<CR>],<C-c>O
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
+"inoremap (; (<CR>);<C-c>O
+"inoremap (, (<CR>),<C-c>O
+"inoremap {; {<CR>};<C-c>O
+"inoremap {, {<CR>},<C-c>O
+"inoremap [; [<CR>];<C-c>O
+"inoremap [, [<CR>],<C-c>O
 "inoremap ' ''<left>
 "inoremap " ""<left>
-
 nnoremap <Leader>+ :vertical resize +5<CR>
 nnoremap <Leader>- :vertical resize -5<CR>
 "nnoremap <Leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
@@ -123,6 +131,7 @@ nmap <leader>nf :NERDTreeFind<CR>
 nmap <leader>gf :diffget //2<CR>
 nmap <leader>gj :diffget //3<CR>
 nmap <leader>gs :G<CR>
+nnoremap <leader>gc :GCheckout<CR>
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -154,3 +163,11 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 "let g:UltiSnipsExpandTrigger="c-s"
 "let g:UltiSnipsJumpForwardTrigger="<c-b>"
 "let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" Remaps for node REPL
+" Run current file
+"nnoremap <Leader>rr :!node %<CR>
+"" Run current line
+"nnoremap <Leader>rl :exec '!node' '-e'  shellescape(getline('.'))<CR>
+"" Run current line, print it below it, and comment it
+"nnoremap <Leader>rp :exec ':r' '!node' '-e'  shellescape(getline('.'))<CR> :Commentary<CR>
