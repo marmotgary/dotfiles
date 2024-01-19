@@ -75,7 +75,7 @@ let g:user_emmet_leader_key='<C-Z>'
 let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
 let g:ackprg = 'ag --nogroup --nocolor --column'
 let $FZF_DEFAULT_OPTS='--reverse'
-let g:prettier#autoformat = 1
+"let g:prettier#autoformat = 0
 "let g:prettier#autoformat_require_pragma = 1
 nnoremap <leader>h :wincmd h<CR>
 nnoremap <leader>j :wincmd j<CR>
@@ -122,7 +122,7 @@ function! s:show_documentation()
   endif
 endfunction
 
-nnoremap <C-p> :GFiles<CR>
+nnoremap <C-p> :GFiles --exclude-standard<CR>
 
 "NERDTree
 nnoremap <C-n> :NERDTreeToggle<CR>
@@ -171,3 +171,6 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 "nnoremap <Leader>rl :exec '!node' '-e'  shellescape(getline('.'))<CR>
 "" Run current line, print it below it, and comment it
 "nnoremap <Leader>rp :exec ':r' '!node' '-e'  shellescape(getline('.'))<CR> :Commentary<CR>
+
+" Copy current window's path
+":nmap cp :let @" = expand("%")<cr>

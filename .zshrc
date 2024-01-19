@@ -115,3 +115,4 @@ export NVM_DIR="$HOME/.nvm"
         #echo "(🚀 $env_info)"
     #fi
 #}
+
